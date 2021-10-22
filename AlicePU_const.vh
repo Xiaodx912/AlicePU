@@ -1,11 +1,13 @@
 // AlicePU constants
 
 //basic consts
-`define ALU_OP_LEN      5               // ALU opcode len
+`define ALU_OP_LEN      5               // ALU opcode length
 `define PC_INIT         32'h00000000    // PC addr when reset
-`define PC_OP_LEN       3               // PC opcode len
+`define PC_OP_LEN       3               // PC opcode length
 `define PC_STEP_LEN     32'h00000004    // PC step length
 `define INST_MEM_SIZE   1024            // Instruction Memory size
+`define DATA_MEM_SIZE   1024            // Data Memory size
+`define IEXT_OP_LEN     2               // I-type Immediate Extender opcode length
 
 //ALU ops
 `define ALU_OP_NONE     5'b00000    // NONE, return input2
@@ -38,3 +40,20 @@
 
 //GPRegs consts
 `define GPR0_CONST          32'h00000000
+
+//Immediate Extender ops
+`define IEXT_OP_ZERO_EXT    2'b01
+`define IEXT_OP_SIGNED_EXT  2'b10
+`define IEXT_OP_SHIFTL16    2'b11
+
+//Mux codes
+`define ALU_SRC_REG         1'b0
+`define ALU_SRC_IMM         1'b1
+
+`define REG_DST_RT          1'b0
+`define REG_DST_RD          1'b1
+
+`define REG_SRC_ALU         2'b01
+`define REG_SRC_DMEM        2'b10
+`define REG_SRC_IMM         2'b11
+
