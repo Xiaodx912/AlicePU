@@ -28,6 +28,7 @@ module Pc(
            input wire [`PC_OP_LEN - 1: 0] pc_op,
            input wire [25: 0] imm_J,   //26bit type J imm
            input wire [15: 0] imm_I,   //16bit type I imm
+           input wire [31: 0] rs_jr,   //from register
 
            output reg [31: 0] pc
        );
@@ -48,6 +49,8 @@ always @(pc, pc_op, imm_I, imm_J) begin
             next_pc <= {pc[31: 28], imm_J, 2'b00};  // overwrite
         `PC_OP_OFFSET_JMP:
             next_pc <= imm_I_ext + pc_step;         // offset
+        `PC_OP_REG_JMP:
+            next_pc <= rs_jr;                       // register
         `PC_OP_HALT:
             next_pc <= pc;                          // halt
         default:

@@ -37,7 +37,7 @@ endmodule
 
 
 module Reg_Dst_Mux (
-            input wire gpr_dst,
+            input wire[1: 0] gpr_dst,
             input wire[4: 0] rt,
             input wire[4: 0] rd,
 
@@ -47,6 +47,7 @@ module Reg_Dst_Mux (
 assign rwrite_addr =
        (gpr_dst == `REG_DST_RT) ? rt :
        (gpr_dst == `REG_DST_RD) ? rd :
+       (gpr_dst == `REG_DST_R31) ? 5'b11111 :
        5'bxxxxx;
 
 endmodule

@@ -29,6 +29,8 @@ reg [`ALU_OP_LEN - 1: 0] op;
 wire [31:0] res;
 wire z,n;
 
+reg ext_mode;
+
 reg [0:20*8-1]       tips;
 
 Alu Alice_ALU(
@@ -36,6 +38,7 @@ Alu Alice_ALU(
     .in1(a),
     .in2(b),
     .shift_imm(shift),
+    .ext_mode(ext_mode),
 
     .out(res),
     .zero(z),
@@ -43,6 +46,7 @@ Alu Alice_ALU(
 );
 
 initial begin
+    ext_mode=1'b0;
     a=32'd0;
     b=32'd12344321;
     op=`ALU_OP_NONE;

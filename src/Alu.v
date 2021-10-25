@@ -22,10 +22,11 @@
 
 
 module Alu(
-           input wire [`ALU_OP_LEN - 1: 0] op,
-           input wire [31: 0] in1,
-           input wire [31: 0] in2,
-           input wire [4: 0] shift_imm,
+           input wire[`ALU_OP_LEN - 1: 0] op,
+           input wire[31: 0] in1,
+           input wire[31: 0] in2,
+           input wire[4: 0] shift_imm,
+           input wire ext_mode,
 
            output wire [31: 0] out,
            output wire zero,
@@ -39,8 +40,8 @@ assign neg = out_reg[31];
 
 wire [32: 0] in1_ext;
 wire [32: 0] in2_ext;
-assign in1_ext = {in1[31], in1};
-assign in2_ext = {in2[31], in2};
+assign in1_ext = {(ext_mode == `ALU_UNSIGNED_EXT) ? 0 : in1[31], in1};
+assign in2_ext = {(ext_mode == `ALU_UNSIGNED_EXT) ? 0 : in2[31], in2};
 //extend for overflow
 
 wire [4: 0] shift_arg;
@@ -64,7 +65,7 @@ always @( * ) begin
         `ALU_OP_MOD:
             out_reg <= in1_ext % in2_ext;
         `ALU_OP_SLT:
-            out_reg <= (in1 < in2) ? 32'h00000001 : 32'h00000000;
+            out_reg <= (in1_ext < in2_ext) ? 32'h00000001 : 32'h00000000;
 
         `ALU_OP_AND:
             out_reg <= in1 & in2;
