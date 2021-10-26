@@ -58,6 +58,7 @@ module Reg_Src_Mux (
             input wire[31: 0] alu,
             input wire[31: 0] data_mem,
             input wire[31: 0] imm_ext,
+            input wire[31:0] pc_next,
 
             output wire[31: 0] rwrite_data
        );
@@ -66,6 +67,7 @@ assign rwrite_data =
        (gpr_src == `REG_SRC_ALU) ? alu :
        (gpr_src == `REG_SRC_DMEM) ? data_mem :
        (gpr_src == `REG_SRC_IMM) ? imm_ext :
+       (gpr_src == `REG_SRC_PC) ? imm_ext :
        32'hxxxxxxxx;
 
 endmodule

@@ -30,12 +30,12 @@ module Pc(
            input wire [15: 0] imm_I,   //16bit type I imm
            input wire [31: 0] rs_jr,   //from register
 
-           output reg [31: 0] pc
+           output reg [31: 0] pc,
+           output wire [31:0] pc_step
        );
 
 reg [31: 0] next_pc;
 
-wire [31: 0] pc_step;
 assign pc_step = pc + `PC_STEP_LEN;
 
 wire [31: 0] imm_I_ext;

@@ -65,7 +65,7 @@ always @( * ) begin
         `ALU_OP_MOD:
             out_reg <= in1_ext % in2_ext;
         `ALU_OP_SLT:
-            out_reg <= (in1_ext < in2_ext) ? 32'h00000001 : 32'h00000000;
+            out_reg <= ($signed(in1_ext) < $signed(in2_ext)) ? 32'h00000001 : 32'h00000000;
 
         `ALU_OP_AND:
             out_reg <= in1 & in2;

@@ -71,6 +71,11 @@
 
 //MIPS32 instructions
 //Ref: https://elearning.ecnu.edu.cn/bbcswebdav/courses/COMS0031131014.02.2017-20182/MIPS%E6%8C%87%E4%BB%A4%E9%9B%86.pdf
+//
+// 以上参考信息可能出现错误。主要集中在立即数扩展部分。
+// 根据 https://www.cnblogs.com/mcdeggy/p/7513650.html 所提
+// add* sub* 指令中u后缀仅用于指示是否触发溢出检测，不影响扩展模式
+//
 
 //R-type
 `define INST_R_ALL      6'b000000

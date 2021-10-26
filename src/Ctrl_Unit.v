@@ -102,9 +102,9 @@ assign alu_op =
        (ctrl_srav ) ? `ALU_OP_SRAV :
        `ALU_OP_NONE ;
 
-assign alu_ext_mode =
-       (ctrl_addu || ctrl_subu || ctrl_sltu ||
-        ctrl_addiu || ctrl_sltiu) ? `ALU_UNSIGNED_EXT : `ALU_SIGNED_EXT;
+assign alu_ext_mode = // See AlicePU_const.vh "MIPS32 instructions" part for more infomation about patch
+       (// ###PATCH### ctrl_addu || ctrl_subu || ctrl_addiu || 
+        ctrl_sltu || ctrl_sltiu) ? `ALU_UNSIGNED_EXT : `ALU_SIGNED_EXT;
 
 assign pc_op =
        (ctrl_beq && alu_zero) ? `PC_OP_OFFSET_JMP :
@@ -113,10 +113,11 @@ assign pc_op =
        (ctrl_jr) ? `PC_OP_REG_JMP :
        `PC_OP_NEXT_STEP;
 
-assign iext_op =
-       (ctrl_andi || ctrl_ori || ctrl_xori ||
-        ctrl_addiu || ctrl_sltiu) ? `IEXT_OP_ZERO_EXT :
+assign iext_op = // See AlicePU_const.vh "MIPS32 instructions" part for more infomation about patch
+       (ctrl_andi || ctrl_ori || // ###PATCH### ctrl_addiu ||
+        ctrl_xori || ctrl_sltiu) ? `IEXT_OP_ZERO_EXT :
        (ctrl_addi || ctrl_lw || ctrl_sw ||
+        ctrl_addiu ||// ###PATCH###
         ctrl_beq || ctrl_bne || ctrl_slti) ? `IEXT_OP_SIGNED_EXT :
        (ctrl_lui) ? `IEXT_OP_SHIFTL16 :
        `IEXT_OP_NOIMM;
@@ -133,7 +134,7 @@ assign reg_dst =
         ctrl_slt || ctrl_sltu ||
         ctrl_sll || ctrl_srl || ctrl_sra ||
         ctrl_sllv || ctrl_srlv || ctrl_srav) ? `REG_DST_RD :
-       (ctrl_addi || ctrl_addiu ||
+       (ctrl_addi || ctrl_addiu || ctrl_lw ||
         ctrl_andi || ctrl_ori || ctrl_xori ||
         ctrl_lui || ctrl_slti || ctrl_sltiu) ? `REG_DST_RT :
        (ctrl_jal) ? `REG_DST_R31 :

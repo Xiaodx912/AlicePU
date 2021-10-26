@@ -38,7 +38,7 @@ always @( * ) begin
             ext_imm <= {imm, 16'b0};
         default:begin
             ext_imm <= 32'hxxxxxxxx;
-            $display("unk iext opcode %b", op);
+            //$display("unk iext opcode %b", op);
         end
     endcase
 end
